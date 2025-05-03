@@ -69,9 +69,9 @@ function Polaroid({
 
 function PolaroidSkeleton() {
   return (
-    <div className="w-full h-full bg-white/10 rounded-[2px] p-2 shadow-lg animate-pulse">
-      <div className="relative w-full h-full mx-auto mb-2 bg-white/20 rounded-sm" />
-      <div className="h-4 bg-white/20 w-16 mx-auto rounded" />
+    <div className="w-full h-full bg-white/10 rounded-[2px] p-2 shadow-lg cursor-pointer transition-transform animate-pulse">
+      <div className="relative w-full h-[120px] mx-auto mb-2 bg-white/20 rounded-sm" />
+      <p className="text-center text-sm font-write bg-white/20 w-16 mx-auto rounded h-4" />
     </div>
   );
 }
