@@ -74,9 +74,9 @@ export function Welcome({ onStart }: WelcomeProps) {
   ];
 
   return (
-    <div className="relative min-h-screen bg-black w-full overflow-x-hidden">
+    <div className="relative min-h-screen w-full overflow-x-hidden">
       {/* Background Image */}
-      <div className="absolute w-[780px] h-screen left-1/2 -translate-x-1/2 top-0">
+      <div className="fixed inset-0">
         <Image
           src="/assets/bg.png"
           alt="Background"
@@ -122,7 +122,7 @@ export function Welcome({ onStart }: WelcomeProps) {
             />
           </div>
 
-          <div className="flex items-center justify-between mt-0 select-none">
+          <div className="flex items-center justify-between -mt-18 select-none">
             <div className="-ml-16 relative w-full h-[450px] -mt-34 select-none">
               {" "}
               {/* Container for the kid image */}
