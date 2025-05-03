@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { LoadingDialog } from "./LoadingDialog";
@@ -17,14 +17,14 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
   const [message, setMessage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     if (preview) {
       URL.revokeObjectURL(preview);
     }
     setSelectedFile(null);
     setPreview(null);
     setMessage("");
-  };
+  }, [preview]);
 
   const handleClose = () => {
     if (!isUploading) {
@@ -38,7 +38,7 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
     if (!isOpen) {
       resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen, resetForm]);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

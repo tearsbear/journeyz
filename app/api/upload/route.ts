@@ -1,20 +1,13 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabaseClient"; // Adjust the path as necessary
 
-// In-memory storage for uploads (will be cleared on server restart)
-let uploads: any[] = [];
-
-async function getFileUrl(fileId: string) {
-  const fileResponse = await fetch(
-    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`
-  );
-
-  if (!fileResponse.ok) {
-    throw new Error("Failed to get file info");
-  }
-
-  const fileData = await fileResponse.json();
-  return `https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_TOKEN}/${fileData.result.file_path}`;
+interface UploadInfo {
+  file_id: string;
+  name: string;
+  message: string;
+  date: string;
+  imageUrl: string;
+  timestamp: number;
 }
 
 export async function GET() {
@@ -95,7 +88,7 @@ export async function POST(request: Request) {
     const filePath = fileData.result.file_path;
 
     // Store the upload information
-    const uploadInfo = {
+    const uploadInfo: UploadInfo = {
       file_id: photo.file_id,
       name,
       message,

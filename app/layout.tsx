@@ -42,7 +42,7 @@ export default function RootLayout({
         <meta name="description" content="Created by Jiaan" />
       </head>
       <body
-        className={`${montserrat.variable} ${inter.variable} font-inter antialiased`}
+        className={`${montserrat.variable} ${deliciousHandrawn.variable} ${inter.variable} font-inter antialiased`}
       >
         {children}
         <Toaster />
