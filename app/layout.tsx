@@ -36,6 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/assets/love.svg" type="image/svg+xml" />
+        <title>Journeyz</title>
+        <meta name="description" content="Created by Jiaan" />
+      </head>
       <body
         className={`${montserrat.variable} ${inter.variable} font-inter antialiased`}
       >
