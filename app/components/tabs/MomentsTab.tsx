@@ -43,7 +43,7 @@ function Polaroid({
         className="w-full h-full bg-white rounded-[2px] p-2 shadow-lg cursor-pointer transition-transform hover:scale-[1.02]"
         onClick={() => handlePopupStateChange(true)}
       >
-        <div className="relative w-[120px] h-[120px] mx-auto mb-2">
+        <div className="relative w-full h-[120px] mx-auto mb-2">
           <Image
             src={imageUrl}
             alt={caption}
@@ -70,7 +70,7 @@ function Polaroid({
 function PolaroidSkeleton() {
   return (
     <div className="w-full h-full bg-white/10 rounded-[2px] p-2 shadow-lg animate-pulse">
-      <div className="relative w-[120px] h-[120px] mx-auto mb-2 bg-white/20 rounded-sm" />
+      <div className="relative w-full h-full mx-auto mb-2 bg-white/20 rounded-sm" />
       <div className="h-4 bg-white/20 w-16 mx-auto rounded" />
     </div>
   );
