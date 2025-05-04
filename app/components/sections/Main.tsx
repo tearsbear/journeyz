@@ -8,10 +8,19 @@ import Image from "next/image";
 
 export function Main() {
   const [activeTab, setActiveTab] = useState<"moments" | "capture">("moments");
-  const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
+  // Separate states for each popup type
+  const [isPhotoboothOpen, setIsPhotoboothOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
 
-  const handlePopupStateChange = (isOpen: boolean) => {
-    setIsAnyPopupOpen(isOpen);
+  // Separate handlers for each popup type
+  const handlePhotoboothState = (isOpen: boolean) => {
+    console.log("Main.tsx - Photobooth state:", isOpen);
+    setIsPhotoboothOpen(isOpen);
+  };
+
+  const handleUploadState = (isOpen: boolean) => {
+    console.log("Main.tsx - Upload state:", isOpen);
+    setIsUploadOpen(isOpen);
   };
 
   return (
@@ -39,7 +48,7 @@ export function Main() {
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.3 }}
             >
-              <MomentsTab onPopupStateChange={handlePopupStateChange} />
+              <MomentsTab onPopupStateChange={handlePhotoboothState} />
             </motion.div>
           ) : (
             <motion.div
@@ -49,7 +58,11 @@ export function Main() {
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.3 }}
             >
-              <CaptureTab onPopupStateChange={handlePopupStateChange} />
+              <CaptureTab
+                onPhotoboothStateChange={handlePhotoboothState}
+                onUploadStateChange={handleUploadState}
+                setActiveTab={setActiveTab}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -57,7 +70,7 @@ export function Main() {
 
       {/* Bottom Navigation */}
       <AnimatePresence>
-        {!isAnyPopupOpen && (
+        {!isPhotoboothOpen && !isUploadOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

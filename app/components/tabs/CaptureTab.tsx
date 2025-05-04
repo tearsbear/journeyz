@@ -3,10 +3,16 @@ import { PhotoboothCard } from "./capture/PhotoboothCard";
 import { UploadCard } from "./capture/UploadCard";
 
 interface CaptureTabProps {
-  onPopupStateChange: (isOpen: boolean) => void;
+  onPhotoboothStateChange: (isOpen: boolean) => void;
+  onUploadStateChange: (isOpen: boolean) => void;
+  setActiveTab: (tab: "moments" | "capture") => void;
 }
 
-export function CaptureTab({ onPopupStateChange }: CaptureTabProps) {
+export function CaptureTab({
+  onPhotoboothStateChange,
+  onUploadStateChange,
+  setActiveTab,
+}: CaptureTabProps) {
   return (
     <div className="flex flex-col w-full">
       {/* Logo */}
@@ -21,8 +27,14 @@ export function CaptureTab({ onPopupStateChange }: CaptureTabProps) {
 
       {/* Action Cards */}
       <div className="px-6 space-y-4">
-        <PhotoboothCard />
-        <UploadCard onPopupStateChange={onPopupStateChange} />
+        <PhotoboothCard
+          onPopupStateChange={onPhotoboothStateChange}
+          onSuccessfulUpload={() => setActiveTab("moments")}
+        />
+        <UploadCard
+          onPopupStateChange={onUploadStateChange}
+          onSuccessfulUpload={() => setActiveTab("moments")}
+        />
       </div>
     </div>
   );

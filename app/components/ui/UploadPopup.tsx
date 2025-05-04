@@ -7,11 +7,18 @@ import { toast } from "sonner";
 interface UploadPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccessfulUpload?: () => void;
+  onPopupStateChange: (isOpen: boolean) => void;
 }
 
 const LOCAL_STORAGE_NAME_KEY = "journeyz_user_name";
 
-export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
+export function UploadPopup({
+  isOpen,
+  onClose,
+  onSuccessfulUpload,
+  onPopupStateChange,
+}: UploadPopupProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [message, setMessage] = useState("");
@@ -27,8 +34,10 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
   }, [preview]);
 
   const handleClose = () => {
+    console.log("UploadPopup - handleClose called");
     if (!isUploading) {
       resetForm();
+      onPopupStateChange(false);
       onClose();
     }
   };
@@ -93,22 +102,23 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
       }
 
       // Add a shorter delay before closing
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Show success toast
       toast.success("Your moment has been shared successfully!");
+
+      // Call the onSuccessfulUpload callback if provided
+      onSuccessfulUpload?.();
 
       // Success
       handleClose();
     } catch (error) {
       console.error("Upload error:", error);
       // Add a shorter delay before hiding the loading dialog on error
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Show error toast
-      toast.error(
-        error instanceof Error ? error.message : "Failed to upload image"
-      );
+      // Show fixed error toast
+      toast.error("Please choose another image or try again");
     } finally {
       setIsUploading(false);
     }
@@ -124,7 +134,7 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#3B75C2] z-50"
+            className="fixed inset-0 bg-[#3B75C2] z-50 flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4">
@@ -145,7 +155,7 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
             </div>
 
             {/* Content */}
-            <div className="px-6 mt-4">
+            <div className="px-6 flex-1 overflow-y-auto">
               {/* Preview Area with Image Selection */}
               <div className="relative bg-white rounded-[20px] aspect-square w-full mb-6 flex items-center justify-center overflow-hidden">
                 {preview ? (
@@ -208,7 +218,7 @@ export function UploadPopup({ isOpen, onClose }: UploadPopupProps) {
               <button
                 onClick={handleUpload}
                 disabled={!isFormValid || isUploading}
-                className="w-full py-4 bg-white rounded-full text-[#3B75C2] font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 mb-20 bg-white rounded-full text-[#3B75C2] font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isUploading ? "Uploading..." : "Share Moments"}
               </button>

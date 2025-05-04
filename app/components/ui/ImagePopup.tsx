@@ -59,7 +59,7 @@ export function ImagePopup({
               className="text-[#3B75C2] text-lg font-semibold inter-font"
               onClick={handleOpenImageInNewTab}
             >
-              Open Image
+              Save Image
             </button>
           </motion.div>
 
@@ -76,7 +76,7 @@ export function ImagePopup({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="relative w-full aspect-square mb-4 rounded-lg overflow-hidden"
+                className="relative w-full aspect-square mb-4 rounded-lg overflow-hidden bg-white/5 flex items-center justify-center"
               >
                 {/* Skeleton */}
                 {imageLoading && (
@@ -88,7 +88,7 @@ export function ImagePopup({
                   src={imageUrl}
                   alt={caption}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   onLoadingComplete={() => setImageLoading(false)}
                   onError={() => setImageLoading(false)}
                 />

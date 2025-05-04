@@ -4,12 +4,17 @@ import { UploadPopup } from "../../ui/UploadPopup";
 
 interface UploadCardProps {
   onPopupStateChange: (isOpen: boolean) => void;
+  onSuccessfulUpload?: () => void;
 }
 
-export function UploadCard({ onPopupStateChange }: UploadCardProps) {
+export function UploadCard({
+  onPopupStateChange,
+  onSuccessfulUpload,
+}: UploadCardProps) {
   const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
 
   const handlePopupState = (state: boolean) => {
+    console.log("UploadCard - Setting state to:", state);
     setIsUploadPopupOpen(state);
     onPopupStateChange(state);
   };
@@ -36,6 +41,8 @@ export function UploadCard({ onPopupStateChange }: UploadCardProps) {
       <UploadPopup
         isOpen={isUploadPopupOpen}
         onClose={() => handlePopupState(false)}
+        onSuccessfulUpload={onSuccessfulUpload}
+        onPopupStateChange={onPopupStateChange}
       />
     </>
   );
